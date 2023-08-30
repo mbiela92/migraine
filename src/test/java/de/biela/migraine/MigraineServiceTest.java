@@ -87,10 +87,9 @@ public class MigraineServiceTest{
 
         //WHEN
         migraineService.deleteById(migraine.getId());
-        Boolean available = migraineService.existsById(migraine.getId());
 
         //THEN
-        assertFalse(available);
+        assertFalse(migraineService.existsById(migraine.getId()));
     }
 
 

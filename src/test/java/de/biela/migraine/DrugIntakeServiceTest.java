@@ -4,7 +4,6 @@ import de.biela.migraine.model.DrugIntake;
 import de.biela.migraine.model.Migraine;
 import de.biela.migraine.service.DrugIntakeService;
 import de.biela.migraine.service.MigraineService;
-import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -109,10 +108,9 @@ public class DrugIntakeServiceTest {
 
         //WHEN
         drugIntakeService.deleteById(drugIntake.getId());
-        Boolean available = drugIntakeService.existsById(drugIntake.getId());
 
         //THEN
-        assertFalse(available);
+        assertFalse(drugIntakeService.existsById(drugIntake.getId()));
     }
 
 }

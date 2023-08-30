@@ -12,7 +12,6 @@ import java.util.UUID;
 @Table(name = "migraine"
 )
 public class Migraine {
-    public Migraine(){};
 
 
     public enum PainSeverity {
