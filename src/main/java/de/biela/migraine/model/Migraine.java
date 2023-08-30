@@ -40,7 +40,9 @@ public class Migraine {
     )
     private LocalDateTime modificationTimestamp;
 
+    public Migraine(){
 
+    }
 
     public Migraine(UUID id, LocalDate date, String description, PainSeverity painSeverity,
                     LocalDateTime creationTimestamp, LocalDateTime modificationTimestamp) {
