@@ -1,0 +1,11 @@
+creationTimestamp oder creationtimestamp, weil Java hat mit das in creation_timestamp geändert. Habe jetzt in der Datenbank alle Spalten auf creation_timestamp geändert
+
+in der Datenbank speicher ich UUID in binary. Dafür wird das in der IDE unsauber dargestellt. Vorteil ist es verbraucht weniger Speicher.
+Wenn ich es aber in Varchar speicher, kann man es lesen. Aber ich muss es in JAVA in einem String speichern... was ist besser.
+
+Macht die Annotation @Autowired im Hintergrund aus dem Interface einfach eine Klasse und instanziert diese?
+
+Das hier ist ja nur eine Warnung, kann ich die einfach überlesen?
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+
+Bei den Test habe ich diesmal nicht mit Order gearbeitet, weil ich fande, dann hängen die test irgendwie mehr voneinander ab.... ist das mit Rollback eine bessere lösunng? Dadurch entsteht mehr Code...
