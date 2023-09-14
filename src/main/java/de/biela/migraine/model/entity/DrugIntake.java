@@ -1,4 +1,4 @@
-package de.biela.migraine.model;
+package de.biela.migraine.model.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -1,4 +1,4 @@
-package de.biela.migraine.model;
+package de.biela.migraine.model.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,25 +19,18 @@ public class Migraine {
     }
     @Id
     @Column(name = "id",
-            updatable = false
-    )
+            updatable = false)
     private UUID id;
-    @Column(name = "date"
-    )
+    @Column(name = "date"    )
     private LocalDate date;
-    @Column(name = "description"
-    )
+    @Column(name = "description"    )
     private String description;
-    @Column(name = "pain_severity"
-    )
+    @Column(name = "pain_severity"    )
     public PainSeverity painSeverity;
     @Column(name = "creation_timestamp",
-            nullable = false
-    )
+            nullable = false)
     private LocalDateTime creationTimestamp;
-    @Column(name = "modification_timestamp"
-
-    )
+    @Column(name = "modification_timestamp"    )
     private LocalDateTime modificationTimestamp;
 
     public Migraine(){

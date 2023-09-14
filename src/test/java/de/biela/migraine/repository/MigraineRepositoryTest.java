@@ -1,8 +1,7 @@
-package de.biela.migraine;
+package de.biela.migraine.repository;
 
 
-import de.biela.migraine.model.Migraine;
-import de.biela.migraine.service.MigraineService;
+import de.biela.migraine.model.entity.Migraine;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +17,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class MigraineServiceTest{
+public class MigraineRepositoryTest {
     private static Migraine migraine;
     @Autowired
-    private MigraineService migraineService;
+    private MigraineRepository migraineRepository;
 
     private void assertMigraineProperties(Migraine expected, Migraine actual) {
         assertEquals(expected.getId(), actual.getId());
@@ -49,10 +48,11 @@ public class MigraineServiceTest{
     @Rollback(value = true)
     public void TestCreateAndGetMigraine() {
         //GIVEN
-        migraineService.save(migraine);
+        migraineRepository.save(migraine);
 
         //WHEN
-        Migraine getMigraine = migraineService.getReferenceById(migraine.getId());
+        Migraine getMigraine = migraineRepository.getReferenceById(migraine.getId());
+        System.out.println(getMigraine);
 
         //THEN
         assertAll("migraine",
@@ -64,13 +64,13 @@ public class MigraineServiceTest{
     @Rollback(value = true)
     public void TestUpdateAndGetMigraine() {
         //GIVEN
-        migraineService.save(migraine);
+        migraineRepository.save(migraine);
         Migraine customizedMigraine = migraine;
         customizedMigraine.setDescription("Update Test Migraine");
 
 
         //WHEN
-        Migraine getMigraine = migraineService.getReferenceById(migraine.getId());
+        Migraine getMigraine = migraineRepository.getReferenceById(migraine.getId());
         getMigraine.setDescription("Update Test Migraine");
 
         //THEN
@@ -83,13 +83,13 @@ public class MigraineServiceTest{
     @Rollback(value = true)
     public void TestDeleteAndGetMigraine() {
         //GIVEN
-        migraineService.save(migraine);
+        migraineRepository.save(migraine);
 
         //WHEN
-        migraineService.deleteById(migraine.getId());
+        migraineRepository.deleteById(migraine.getId());
 
         //THEN
-        assertFalse(migraineService.existsById(migraine.getId()));
+        assertFalse(migraineRepository.existsById(migraine.getId()));
     }
 
 

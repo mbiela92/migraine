@@ -1,9 +1,9 @@
-package de.biela.migraine;
+package de.biela.migraine.repository;
 
-import de.biela.migraine.model.DrugIntake;
-import de.biela.migraine.model.Migraine;
-import de.biela.migraine.service.DrugIntakeService;
-import de.biela.migraine.service.MigraineService;
+import de.biela.migraine.model.entity.DrugIntake;
+import de.biela.migraine.model.entity.Migraine;
+import de.biela.migraine.repository.DrugIntakeRepository;
+import de.biela.migraine.repository.MigraineRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -19,13 +19,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class DrugIntakeServiceTest {
+public class DrugIntakeRepositoryTest {
     private static DrugIntake drugIntake;
     private static Migraine migraine;
     @Autowired
-    private DrugIntakeService drugIntakeService;
+    private DrugIntakeRepository drugIntakeRepository;
     @Autowired()
-    private MigraineService migraineService;
+    private MigraineRepository migraineRepository;
     private void assertDrugIntakeProperties(DrugIntake expected, DrugIntake actual) {
         assertEquals(expected.getId(), actual.getId());
         assertEquals(expected.getDrug(), actual.getDrug());
@@ -69,10 +69,10 @@ public class DrugIntakeServiceTest {
     @Rollback(value = true)
     public void TestCreateAndGetMigraine() {
         //GIVEN
-        migraineService.save(migraine);
-        drugIntakeService.save(drugIntake);
+        migraineRepository.save(migraine);
+        drugIntakeRepository.save(drugIntake);
         //WHEN
-        DrugIntake getDrugIntake = drugIntakeService.getReferenceById(drugIntake.getId());
+        DrugIntake getDrugIntake = drugIntakeRepository.getReferenceById(drugIntake.getId());
 
         //THEN
         assertAll("migraine",
@@ -84,14 +84,14 @@ public class DrugIntakeServiceTest {
     @Rollback(value = true)
     public void TestUpdateAndGetMigraine() {
         //GIVEN
-        migraineService.save(migraine);
-        drugIntakeService.save(drugIntake);
+        migraineRepository.save(migraine);
+        drugIntakeRepository.save(drugIntake);
         DrugIntake customizedDrugIntake = drugIntake;
         customizedDrugIntake.setDrug(DrugIntake.Drug.IBU);
 
 
         //WHEN
-        DrugIntake getDrugIntake = drugIntakeService.getReferenceById(drugIntake.getId());
+        DrugIntake getDrugIntake = drugIntakeRepository.getReferenceById(drugIntake.getId());
         getDrugIntake.setDrug(DrugIntake.Drug.IBU);
 
         //THEN
@@ -103,14 +103,14 @@ public class DrugIntakeServiceTest {
     @Rollback(value = true)
     public void TestDeleteAndGetMigraine() {
         //GIVEN
-        migraineService.save(migraine);
-        drugIntakeService.save(drugIntake);
+        migraineRepository.save(migraine);
+        drugIntakeRepository.save(drugIntake);
 
         //WHEN
-        drugIntakeService.deleteById(drugIntake.getId());
+        drugIntakeRepository.deleteById(drugIntake.getId());
 
         //THEN
-        assertFalse(drugIntakeService.existsById(drugIntake.getId()));
+        assertFalse(drugIntakeRepository.existsById(drugIntake.getId()));
     }
 
 }

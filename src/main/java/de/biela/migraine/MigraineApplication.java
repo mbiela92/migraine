@@ -9,6 +9,8 @@ public class MigraineApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MigraineApplication.class, args);
+
+
 	}
 
 

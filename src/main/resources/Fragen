@@ -9,3 +9,24 @@ Das hier ist ja nur eine Warnung, kann ich die einfach überlesen?
 OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
 
 Bei den Test habe ich diesmal nicht mit Order gearbeitet, weil ich fande, dann hängen die test irgendwie mehr voneinander ab.... ist das mit Rollback eine bessere lösunng? Dadurch entsteht mehr Code...
+
+
+@Collumn fremdschlüssel
+
+
+__________________________________
+Wo prüft man bei der Put Methode ob alle Werte vorhanden sind?
+
+Beim "Programmablauf" von Patch kommt einmal update und einmal patch vor... nimmt man da überall patch oder kann man verständnishalber auch update nehmen. Genauso bei create/put
+
+MigraineControllerTest finde ich meine Lösung bisschen sinnfrei. Gibt es was besseres ?
+
+_______________________________________________
+CreationTimestamp wie am besten programmieren?
+DrugIntake drugIntake = new DrugIntake(createDrugIntake.id(),createDrugIntake.drug(),createDrugIntake.amountEntity(),createDrugIntake.amount(), createDrugIntake.takeTimestamp(),createDrugIntake.migraineId(),LocalDateTime.now(),LocalDateTime.now());
+oder
+DrugIntake drugIntake = new DrugIntake(createDrugIntake.id(),createDrugIntake.drug(),createDrugIntake.amountEntity(),createDrugIntake.amount(), createDrugIntake.takeTimestamp(),createDrugIntake.migraineId(),createDrugIntake.creationTimestamp(),createDrugIntake.modificationTimestamp());
+
+Weil bei der ersten Variante ist gegeben, dass die Zeiten vernünftig gesetzt sind. Aber dann kann ich keinen echten test durchführen. Somit müsste ich da einen mock anwenden... Was ja auch nicht so richtig die funktion testet.....
+
+_______________________________________________
