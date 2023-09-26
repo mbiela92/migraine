@@ -30,3 +30,5 @@ DrugIntake drugIntake = new DrugIntake(createDrugIntake.id(),createDrugIntake.dr
 Weil bei der ersten Variante ist gegeben, dass die Zeiten vernünftig gesetzt sind. Aber dann kann ich keinen echten test durchführen. Somit müsste ich da einen mock anwenden... Was ja auch nicht so richtig die funktion testet.....
 
 _______________________________________________
+
+Wenn ich beim debuggen mir das drugIntakeDto anschaue ist schön die migraine enthalten. Aber in der migraine ist die drugIntakeListe leer. Soll die leer bleiben?

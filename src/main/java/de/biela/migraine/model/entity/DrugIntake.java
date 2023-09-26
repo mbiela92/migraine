@@ -1,16 +1,12 @@
 package de.biela.migraine.model.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 @Entity(name = "DrugIntake")
-@Table(name = "drugintake"
-)
+@Table(name = "drugintake")
 public class DrugIntake {
     public DrugIntake() {
 
@@ -35,24 +31,25 @@ public class DrugIntake {
     private BigDecimal amount;
     @Column(name = "takeTimestamp")
     private LocalDateTime takeTimestamp;
-    @Column(name = "migraineId")
-    private UUID migraineId;
     @Column(name = "creationTimestamp")
     private LocalDateTime creationTimestamp;
     @Column(name = "modificationTimestamp")
     private LocalDateTime modificationTimestamp;
+    @ManyToOne
+    @JoinColumn(name = "migraineId")
+    private Migraine migraine;
 
     public DrugIntake(UUID id, Drug drug, AmountEntity amountEntity, BigDecimal amount,
-                      LocalDateTime takeTimestamp, UUID migraineId, LocalDateTime creationTimestamp,
-                      LocalDateTime modificationTimestamp) {
+                      LocalDateTime takeTimestamp, LocalDateTime creationTimestamp,
+                      LocalDateTime modificationTimestamp, Migraine migraine) {
         this.id = id;
         this.drug = drug;
         this.amountEntity = amountEntity;
         this.amount = amount;
         this.takeTimestamp = takeTimestamp;
-        this.migraineId = migraineId;
         this.creationTimestamp = creationTimestamp;
         this.modificationTimestamp = modificationTimestamp;
+        this.migraine = migraine;
     }
 
     public UUID getId() {
@@ -95,13 +92,6 @@ public class DrugIntake {
         this.takeTimestamp = takeTimestamp;
     }
 
-    public UUID getMigraineId() {
-        return migraineId;
-    }
-
-    public void setMigraineId(UUID migraineId) {
-        this.migraineId = migraineId;
-    }
 
     public LocalDateTime getCreationTimestamp() {
         return creationTimestamp;
@@ -119,6 +109,14 @@ public class DrugIntake {
         this.modificationTimestamp = modificationTimestamp;
     }
 
+    public Migraine getMigraine() {
+        return migraine;
+    }
+
+    public void setMigraine(Migraine migraine) {
+        this.migraine = migraine;
+    }
+
     @Override
     public String toString() {
         return "\nDrugIntake{\n" +
@@ -127,7 +125,6 @@ public class DrugIntake {
                 ", \namountEntity=" + amountEntity +
                 ", \namount=" + amount +
                 ", \ntakeTimestamp=" + takeTimestamp +
-                ", \nmigraineId=" + migraineId +
                 ", \ncreationTimestamp=" + creationTimestamp +
                 ", \nmodificationTimestamp=" + modificationTimestamp +
                 '}';

@@ -1,9 +1,7 @@
 package de.biela.migraine.service.impl;
 
 import de.biela.migraine.model.dto.DrugIntakeDto;
-import de.biela.migraine.model.dto.MigraineDto;
 import de.biela.migraine.model.entity.DrugIntake;
-import de.biela.migraine.model.entity.Migraine;
 import de.biela.migraine.repository.DrugIntakeRepository;
 import de.biela.migraine.service.DrugIntakeService;
 import org.springframework.stereotype.Service;
@@ -23,7 +21,7 @@ public class DrugIntakeServiceImpl implements DrugIntakeService {
     public DrugIntakeDto getDrugIntakeById(UUID id) {
         try {
             Optional<DrugIntake> drugIntake = drugIntakeRepository.findById(id);
-            return drugIntake.map(drug -> new DrugIntakeDto(drug.getId(),drug.getDrug(),drug.getAmountEntity(),drug.getAmount(),drug.getTakeTimestamp(),drug.getMigraineId(),drug.getCreationTimestamp(),drug.getModificationTimestamp())).orElse(null);
+            return drugIntake.map(drug -> new DrugIntakeDto(drug.getId(),drug.getDrug(),drug.getAmountEntity(),drug.getAmount(),drug.getTakeTimestamp(),drug.getCreationTimestamp(),drug.getModificationTimestamp(),drug.getMigraine())).orElse(null);
         }catch (IllegalArgumentException e) {
             e.printStackTrace();
             throw new IllegalArgumentException("Ungültige Argumente für Aufruf des DrugIntake.");
@@ -52,10 +50,10 @@ public class DrugIntakeServiceImpl implements DrugIntakeService {
                     tempDrugIntake.setTakeTimestamp(updatedDrugIntake.takeTimestamp());
                     tempDrugIntake.setModificationTimestamp(LocalDateTime.now());
                 }
-                if (updatedDrugIntake.migraineId() != null) {
+                /*if (updatedDrugIntake.migraineId() != null) {
                     tempDrugIntake.setMigraineId(updatedDrugIntake.migraineId());
                     tempDrugIntake.setModificationTimestamp(LocalDateTime.now());
-                }
+                }*/
                 drugIntakeRepository.save(tempDrugIntake);
                 return "DrugIntake wurde aktualisiert";
             }
@@ -68,7 +66,7 @@ public class DrugIntakeServiceImpl implements DrugIntakeService {
     @Override
     public String createDrugIntakeById(UUID id, DrugIntakeDto createDrugIntake) {
         try {
-            DrugIntake drugIntake = new DrugIntake(createDrugIntake.id(),createDrugIntake.drug(),createDrugIntake.amountEntity(),createDrugIntake.amount(), createDrugIntake.takeTimestamp(),createDrugIntake.migraineId(),createDrugIntake.creationTimestamp(),createDrugIntake.modificationTimestamp());
+            DrugIntake drugIntake = new DrugIntake(createDrugIntake.id(),createDrugIntake.drug(),createDrugIntake.amountEntity(),createDrugIntake.amount(), createDrugIntake.takeTimestamp(),createDrugIntake.creationTimestamp(),createDrugIntake.modificationTimestamp(),createDrugIntake.migraineId());
             drugIntakeRepository.save(drugIntake);
             return "DrugIntake wurde erstellt";
         }catch (IllegalArgumentException e){

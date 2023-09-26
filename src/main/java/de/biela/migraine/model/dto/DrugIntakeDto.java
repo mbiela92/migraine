@@ -1,8 +1,7 @@
 package de.biela.migraine.model.dto;
 
 import de.biela.migraine.model.entity.DrugIntake;
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
+import de.biela.migraine.model.entity.Migraine;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -14,6 +13,7 @@ public record DrugIntakeDto(
         DrugIntake.AmountEntity amountEntity,
         BigDecimal amount,
         LocalDateTime takeTimestamp,
-        UUID migraineId,
         LocalDateTime creationTimestamp,
-        LocalDateTime modificationTimestamp) {}
+        LocalDateTime modificationTimestamp,
+        Migraine migraineId
+        ) {}

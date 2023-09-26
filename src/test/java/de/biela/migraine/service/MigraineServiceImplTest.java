@@ -1,12 +1,14 @@
 package de.biela.migraine.service;
+
 import de.biela.migraine.model.dto.MigraineDto;
-import de.biela.migraine.model.entity.Migraine;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -26,7 +28,7 @@ public class MigraineServiceImplTest {
     @BeforeAll
     public static void setUp() {
         uuid = UUID.randomUUID();
-        migraineDto = new MigraineDto(uuid, LocalDate.now(),"test", Migraine.PainSeverity.WEAK, LocalDateTime.now().withNano(0),LocalDateTime.now().withNano(0));
+        migraineDto = new MigraineDto(uuid, LocalDate.now(),"test", de.biela.migraine.model.entity.Migraine.PainSeverity.WEAK, LocalDateTime.now().withNano(0),LocalDateTime.now().withNano(0));
     }
 
     @Test

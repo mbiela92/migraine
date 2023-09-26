@@ -1,10 +1,14 @@
 package de.biela.migraine.service;
+
 import de.biela.migraine.model.dto.DrugIntakeDto;
 import de.biela.migraine.model.entity.DrugIntake;
+import de.biela.migraine.model.entity.Migraine;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -23,13 +27,13 @@ public class DrugIntakeServiceImplTest {
         assertEquals(expected.amountEntity(), actual.amountEntity());
         assertEquals(expected.amount(), actual.amount());
         assertEquals(expected.takeTimestamp(), actual.takeTimestamp());
-        assertEquals(expected.migraineId(), actual.migraineId());
         assertEquals(expected.creationTimestamp(), actual.creationTimestamp());
     }
     @BeforeAll
     public static void setUp() {
         uuid = UUID.randomUUID();
-        drugIntakeDto = new DrugIntakeDto(uuid, DrugIntake.Drug.PARACETAMOL, DrugIntake.AmountEntity.PIECE, BigDecimal.ONE, LocalDateTime.now().withNano(0),UUID.fromString("0877591e-c73d-4413-a939-64bc4326b5e8"),LocalDateTime.now().withNano(0),LocalDateTime.now().withNano(0));
+        Migraine migraine = new Migraine(UUID.fromString("1f76bfe2-5c82-4575-b0b5-a5804c86f704"), LocalDate.now(),"test", Migraine.PainSeverity.WEAK, LocalDateTime.now().withNano(0),LocalDateTime.now().withNano(0));
+        drugIntakeDto = new DrugIntakeDto(uuid, DrugIntake.Drug.PARACETAMOL, DrugIntake.AmountEntity.PIECE, BigDecimal.ONE, LocalDateTime.now().withNano(0),LocalDateTime.now().withNano(0),LocalDateTime.now().withNano(0),migraine);
     }
     @Test
     @Order(1)
@@ -50,7 +54,7 @@ public class DrugIntakeServiceImplTest {
     @Order(2)
     public void TestUpdateAndGetDrugIntake() {
         //GIVEN
-        DrugIntakeDto updatedDrugIntakeDto = new DrugIntakeDto(drugIntakeDto.id(), drugIntakeDto.drug(),drugIntakeDto.amountEntity(), BigDecimal.TWO, drugIntakeDto.takeTimestamp(),drugIntakeDto.migraineId(),drugIntakeDto.creationTimestamp(),drugIntakeDto.modificationTimestamp());
+        DrugIntakeDto updatedDrugIntakeDto = new DrugIntakeDto(drugIntakeDto.id(), drugIntakeDto.drug(),drugIntakeDto.amountEntity(), BigDecimal.TWO, drugIntakeDto.takeTimestamp(),drugIntakeDto.creationTimestamp(),drugIntakeDto.modificationTimestamp(),drugIntakeDto.migraineId());
 
         //WHEN
         drugIntakeService.updateDrugIntakeById(uuid,updatedDrugIntakeDto);

@@ -1,12 +1,11 @@
 package de.biela.migraine.model.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 @Entity(name = "Migraine")
 @Table(name = "migraine"
@@ -32,6 +31,8 @@ public class Migraine {
     private LocalDateTime creationTimestamp;
     @Column(name = "modification_timestamp"    )
     private LocalDateTime modificationTimestamp;
+    @OneToMany(mappedBy = "migraine",fetch = FetchType.EAGER)
+    private List<DrugIntake> drugIntakeList;
 
     public Migraine(){
 
@@ -46,6 +47,8 @@ public class Migraine {
         this.creationTimestamp = creationTimestamp;
         this.modificationTimestamp = modificationTimestamp;
     }
+
+
 
     public UUID getId() {
         return id;
@@ -95,15 +98,5 @@ public class Migraine {
         this.modificationTimestamp = modificationTimestamp;
     }
 
-    @Override
-    public String toString() {
-        return "\nMigraine{\n" +
-                "id=" + id +
-                ",\ndate=" + date +
-                ",\ndescription=" + description +
-                ",\npainSeverity=" + painSeverity +
-                ",\ncreationTimestamp=" + creationTimestamp +
-                ",\nmodificationTimestamp=" + modificationTimestamp +
-                '}';
-    }
+
 }
