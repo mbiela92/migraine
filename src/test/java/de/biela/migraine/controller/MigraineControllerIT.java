@@ -40,10 +40,10 @@ public class MigraineControllerIT {
     @Test
     public void TestUpdateAndGetMigraine(){
         //GIVEN
-        MigraineDto updatedMigraineDto = new MigraineDto(uuid, LocalDate.now(),"updated tesssssssssssssssssssssssssssst", de.biela.migraine.model.entity.Migraine.PainSeverity.WEAK, LocalDateTime.now().withNano(0),LocalDateTime.now().withNano(0));
+        MigraineDto updatedMigraineDto = new MigraineDto(migraineDto.id(), migraineDto.date(),"updated tesssssssssssssssssssssssssssst", migraineDto.painSeverity(), migraineDto.creationTimestamp(),migraineDto.modificationTimestamp());
         given()
                 .contentType(ContentType.JSON)
-                .body(migraineDto)
+                .body(updatedMigraineDto)
         .when()
                 .patch(uuid.toString())
         .then()
