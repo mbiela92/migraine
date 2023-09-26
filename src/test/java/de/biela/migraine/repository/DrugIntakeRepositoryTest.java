@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.Rollback;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -66,7 +65,6 @@ public class DrugIntakeRepositoryTest {
     }
 
     @Test
-    @Rollback(value = true)
     public void TestCreateAndGetMigraine() {
         //GIVEN
         migraineRepository.save(migraine);
@@ -81,7 +79,6 @@ public class DrugIntakeRepositoryTest {
     }
 
     @Test
-    @Rollback(value = true)
     public void TestUpdateAndGetMigraine() {
         //GIVEN
         migraineRepository.save(migraine);
@@ -100,7 +97,6 @@ public class DrugIntakeRepositoryTest {
         );
     }
     @Test
-    @Rollback(value = true)
     public void TestDeleteAndGetMigraine() {
         //GIVEN
         migraineRepository.save(migraine);
