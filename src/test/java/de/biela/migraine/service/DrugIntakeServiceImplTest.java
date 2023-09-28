@@ -68,14 +68,13 @@ public class DrugIntakeServiceImplTest {
     @Order(3)
     public void TestDeleteAndGetDrugIntake() {
         //GIVEN
-        Boolean available = true;
 
         //WHEN
         drugIntakeService.deleteDrugIntakeById(drugIntakeDto.id());
         DrugIntakeDto deletedDrugIntakeDto = drugIntakeService.getDrugIntakeById(drugIntakeDto.id());
 
         //THEN
-        assertTrue(deletedDrugIntakeDto == null);
+        assertNull(deletedDrugIntakeDto);
     }
 
 }
