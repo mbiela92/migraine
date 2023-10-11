@@ -32,3 +32,8 @@ Weil bei der ersten Variante ist gegeben, dass die Zeiten vernünftig gesetzt si
 _______________________________________________
 
 Wenn ich beim debuggen mir das drugIntakeDto anschaue ist schön die migraine enthalten. Aber in der migraine ist die drugIntakeListe leer. Soll die leer bleiben?
+
+Habe bei der getDrugIntakeById Methode zwei Wege zum testen, welcher ist besser?
+
+
+Bei der deleteDrugIntakeById-Methode kann doch eigentlich die Exception raus. Es gibt doch keine Möglichkeit wie ein Fehler entstehen kann.

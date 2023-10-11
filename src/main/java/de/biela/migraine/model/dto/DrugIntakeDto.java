@@ -16,4 +16,6 @@ public record DrugIntakeDto(
         LocalDateTime creationTimestamp,
         LocalDateTime modificationTimestamp,
         Migraine migraineId
-        ) {}
+        ) {
+
+}
