@@ -1,6 +1,7 @@
 package de.biela.migraine.service.impl;
 
 import de.biela.migraine.model.dto.MigraineDto;
+import de.biela.migraine.model.entity.Migraine;
 import de.biela.migraine.repository.MigraineRepository;
 import de.biela.migraine.service.MigraineService;
 import org.springframework.stereotype.Service;
@@ -21,9 +22,9 @@ public class MigraineServiceImpl implements MigraineService {
     @Override
     public MigraineDto getMigraineById(final UUID id) {
         try {
-            Optional <de.biela.migraine.model.entity.Migraine> migraine = migraineRepository.findById(id);
+            Optional <Migraine> migraine = migraineRepository.findById(id);
             return migraine.map(mig -> new MigraineDto(mig.getId(),mig.getDate(),mig.getDescription(),mig.getPainSeverity(),mig.getCreationTimestamp(),mig.getModificationTimestamp())).orElse(null);
-        }catch (IllegalArgumentException e) {
+        }catch (Exception e) {
             e.printStackTrace();
             throw new IllegalArgumentException("Ungültige Argumente für Aufruf der Migräne.");
         }
@@ -31,9 +32,9 @@ public class MigraineServiceImpl implements MigraineService {
     @Override
     public String updateMigraineById(final UUID id, final MigraineDto updatedMigraine){
         try {
-            Optional<de.biela.migraine.model.entity.Migraine> existingMigraine = migraineRepository.findById(id);
+            Optional<Migraine> existingMigraine = migraineRepository.findById(id);
             if (existingMigraine.isPresent()) {
-                de.biela.migraine.model.entity.Migraine tempMigraine = existingMigraine.get();
+                Migraine tempMigraine = existingMigraine.get();
                 if (updatedMigraine.date() != null) {
                     tempMigraine.setDate(updatedMigraine.date());
                     tempMigraine.setModificationTimestamp(LocalDateTime.now());
@@ -49,7 +50,7 @@ public class MigraineServiceImpl implements MigraineService {
                 migraineRepository.save(tempMigraine);
                 return "Migräne wurde aktualisiert";
             }
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             throw new IllegalArgumentException("Ungültige Argumente für die Migräne update.");
         }
@@ -58,7 +59,7 @@ public class MigraineServiceImpl implements MigraineService {
     @Override
     public String createMigraineById(UUID id, MigraineDto createMigraine) {
         try {
-            de.biela.migraine.model.entity.Migraine migraine = new de.biela.migraine.model.entity.Migraine(createMigraine.id(),createMigraine.date(),createMigraine.description(),createMigraine.painSeverity(), createMigraine.creationTimestamp(),createMigraine.modificationTimestamp());
+            Migraine migraine = new Migraine(createMigraine.id(),createMigraine.date(),createMigraine.description(),createMigraine.painSeverity(), createMigraine.creationTimestamp(),createMigraine.modificationTimestamp());
             migraineRepository.save(migraine);
             return "Migräne wurde erstellt";
         }catch (IllegalArgumentException e){

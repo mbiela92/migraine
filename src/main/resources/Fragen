@@ -33,7 +33,8 @@ _______________________________________________
 
 Wenn ich beim debuggen mir das drugIntakeDto anschaue ist schön die migraine enthalten. Aber in der migraine ist die drugIntakeListe leer. Soll die leer bleiben?
 
-Habe bei der getDrugIntakeById Methode zwei Wege zum testen, welcher ist besser?
-
+Ich habe bei der Get methode einfach einen Parameter in der DB verändert. Kann man das besser lösen?
 
 Bei der deleteDrugIntakeById-Methode kann doch eigentlich die Exception raus. Es gibt doch keine Möglichkeit wie ein Fehler entstehen kann.
+
+Gibt es eine Möglichkeit mit einem Mock einen falschen Datentyp auszugeben, um nicht einfach eine Exception zu werfen, sondern diese zu provozieren.

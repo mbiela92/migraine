@@ -3,7 +3,6 @@ package de.biela.migraine.service;
 import de.biela.migraine.model.dto.DrugIntakeDto;
 import de.biela.migraine.model.entity.DrugIntake;
 import de.biela.migraine.model.entity.Migraine;
-import de.biela.migraine.repository.DrugIntakeRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,9 +13,6 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -36,7 +32,7 @@ public class DrugIntakeServiceImplTest {
     @BeforeAll
     public static void setUp() {
         uuid = UUID.randomUUID();
-        Migraine migraine = new Migraine(UUID.fromString("1f76bfe2-5c82-4575-b0b5-a5804c86f704"), LocalDate.now(),"test", Migraine.PainSeverity.WEAK, LocalDateTime.now().withNano(0),LocalDateTime.now().withNano(0));
+        Migraine migraine = new Migraine(UUID.fromString("c3cd356c-2dc0-44d2-9c2a-3f40b985e245"), LocalDate.now(),"test", Migraine.PainSeverity.WEAK, LocalDateTime.now().withNano(0),LocalDateTime.now().withNano(0));
         drugIntakeDto = new DrugIntakeDto(uuid, DrugIntake.Drug.PARACETAMOL, DrugIntake.AmountEntity.PIECE, BigDecimal.ONE, LocalDateTime.now().withNano(0),LocalDateTime.now().withNano(0),LocalDateTime.now().withNano(0),migraine);
     }
     @Test
@@ -95,20 +91,7 @@ public class DrugIntakeServiceImplTest {
     }
     @Order(5)
     @Test
-    public void TestGetDrugIntakeById_InvalidForeignKey_ThrownIllegalArgument() {
-        //GIVEN
-        DrugIntakeRepository drugIntakeMock = mock(DrugIntakeRepository.class);
-        //WHEN
-        when(drugIntakeMock.findById(any(UUID.class))).thenThrow(new IllegalArgumentException());
-        //THEN
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            drugIntakeService.getDrugIntakeById(UUID.fromString("31ea9ad9-082a-4dd5-b918-d18a79efb036"));
-        });
-        assertEquals("Ungültige Argumente für Aufruf des DrugIntake.", exception.getMessage());
-    }
-    @Order(6)
-    @Test
-    public void TestGetDrugIntakeById_InvalidForeignKey_ThrownIllegalArgument1(){
+    public void TestGetDrugIntakeById_InvalidArgumentInDb_ThrownIllegalArgument1(){
         //WHEN
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             drugIntakeService.getDrugIntakeById(UUID.fromString("4412622b-782c-4f02-b0a1-4575bce4cc10"));
@@ -116,7 +99,7 @@ public class DrugIntakeServiceImplTest {
         //THEN
         assertEquals("Ungültige Argumente für Aufruf des DrugIntake.", exception.getMessage());
     }
-    @Order(7)
+    @Order(6)
     @Test
     public void TestUpdateDrugIntakeById_InvalidDrugIntakeDto_ThrownIllegalArgument(){
         //GIVEN
@@ -129,7 +112,7 @@ public class DrugIntakeServiceImplTest {
         //THEN
         assertEquals("Ungültige Argumente für DrugIntake update.", exception.getMessage());
     }
-    @Order(8)
+    @Order(7)
     @Test
     public void TestUpdateDrugIntakeById_InvalidUUID_FailureMessage(){
         //GIVEN
