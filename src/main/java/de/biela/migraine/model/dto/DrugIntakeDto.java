@@ -15,7 +15,7 @@ public record DrugIntakeDto(
         LocalDateTime takeTimestamp,
         LocalDateTime creationTimestamp,
         LocalDateTime modificationTimestamp,
-        Migraine migraineId
+        Migraine migraine
         ) {
 
 }

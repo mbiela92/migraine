@@ -21,13 +21,9 @@ public class MigraineServiceImpl implements MigraineService {
 
     @Override
     public MigraineDto getMigraineById(final UUID id) {
-        try {
             Optional <Migraine> migraine = migraineRepository.findById(id);
-            return migraine.map(mig -> new MigraineDto(mig.getId(),mig.getDate(),mig.getDescription(),mig.getPainSeverity(),mig.getCreationTimestamp(),mig.getModificationTimestamp())).orElse(null);
-        }catch (Exception e) {
-            e.printStackTrace();
-            throw new IllegalArgumentException("Ungültige Argumente für Aufruf der Migräne.");
-        }
+            return migraine.map(mig -> new MigraineDto(mig.getId(),mig.getDate(),mig.getDescription(),mig.getPainSeverity(),mig.getCreationTimestamp(),mig.getModificationTimestamp(),null)).orElse(null);
+
     }
     @Override
     public String updateMigraineById(final UUID id, final MigraineDto updatedMigraine){
@@ -57,11 +53,11 @@ public class MigraineServiceImpl implements MigraineService {
         return "Update ist fehlgeschlagen";
     }
     @Override
-    public String createMigraineById(UUID id, MigraineDto createMigraine) {
+    public Migraine createMigraineById(UUID id, MigraineDto createMigraine) {
         try {
-            Migraine migraine = new Migraine(createMigraine.id(),createMigraine.date(),createMigraine.description(),createMigraine.painSeverity(), createMigraine.creationTimestamp(),createMigraine.modificationTimestamp());
-            migraineRepository.save(migraine);
-            return "Migräne wurde erstellt";
+            Migraine migraine = new Migraine(createMigraine.date(),createMigraine.description(),createMigraine.painSeverity(), createMigraine.creationTimestamp(),createMigraine.modificationTimestamp());
+            migraine.setId(createMigraine.id());
+            return migraineRepository.save(migraine);
         }catch (IllegalArgumentException e){
             e.printStackTrace();
             throw new IllegalArgumentException("Ungültige Argumente für die Erstellung von Migräne.");
@@ -70,13 +66,9 @@ public class MigraineServiceImpl implements MigraineService {
     }
     @Override
     public String deleteMigraineById(UUID id) {
-        try {
+
             migraineRepository.deleteById(id);
             return "Migräne wurde gelöscht";
-        }catch (IllegalArgumentException e){
-            e.printStackTrace();
-            throw new IllegalArgumentException("Ungültige Argumente für die Löschung von Migräne.");
-        }
     }
 
 

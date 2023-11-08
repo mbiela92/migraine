@@ -1,6 +1,7 @@
 package de.biela.migraine.controller;
 
 import de.biela.migraine.model.dto.MigraineDto;
+import de.biela.migraine.model.entity.Migraine;
 import de.biela.migraine.service.MigraineService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ public class MigraineController {
     }
 
     @PutMapping(value = "/{id}")
-    public String createMigraineById(@PathVariable(value = "id") final String id, @RequestBody MigraineDto createMigraine) {
+    public Migraine createMigraineById(@PathVariable(value = "id") final String id, @RequestBody MigraineDto createMigraine) {
         return migraineService.createMigraineById(UUID.fromString(id), createMigraine);
     }
 

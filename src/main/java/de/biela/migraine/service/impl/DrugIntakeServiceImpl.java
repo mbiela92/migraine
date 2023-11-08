@@ -19,17 +19,14 @@ public class DrugIntakeServiceImpl implements DrugIntakeService {
 
     @Override
     public DrugIntakeDto getDrugIntakeById(UUID id) {
-        try {
+
             Optional<DrugIntake> drugIntake = drugIntakeRepository.findById(id);
             return drugIntake.map(drug -> new DrugIntakeDto(drug.getId(),drug.getDrug(),drug.getAmountEntity(),drug.getAmount(),drug.getTakeTimestamp(),drug.getCreationTimestamp(),drug.getModificationTimestamp(),drug.getMigraine())).orElse(null);
-        }catch (Exception e) {
-            e.printStackTrace();
-            throw new IllegalArgumentException("Ungültige Argumente für Aufruf des DrugIntake.");
-        }
+
     }
     @Override
     public String updateDrugIntakeById(UUID id, DrugIntakeDto updatedDrugIntake) {
-        try {
+
             Optional<DrugIntake> existingDrugIntake = drugIntakeRepository.findById(id);
             if (existingDrugIntake.isPresent()) {
                 DrugIntake tempDrugIntake = existingDrugIntake.get();
@@ -49,25 +46,20 @@ public class DrugIntakeServiceImpl implements DrugIntakeService {
                     tempDrugIntake.setTakeTimestamp(updatedDrugIntake.takeTimestamp());
                     tempDrugIntake.setModificationTimestamp(LocalDateTime.now());
                 }
-                /*if (updatedDrugIntake.migraineId() != null) {
-                    tempDrugIntake.setMigraineId(updatedDrugIntake.migraineId());
+                if (updatedDrugIntake.migraine() != null) {
+                    tempDrugIntake.setMigraine(updatedDrugIntake.migraine());
                     tempDrugIntake.setModificationTimestamp(LocalDateTime.now());
-                }*/
+                }
                 drugIntakeRepository.save(tempDrugIntake);
                 return "DrugIntake wurde aktualisiert";
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new IllegalArgumentException("Ungültige Argumente für DrugIntake update.");
-        }
         return "Update ist fehlgeschlagen";
     }
     @Override
-    public String createDrugIntakeById(UUID id, DrugIntakeDto createDrugIntake) {
+    public DrugIntake createDrugIntakeById(UUID id, DrugIntakeDto createDrugIntake) {
         try {
-            DrugIntake drugIntake = new DrugIntake(createDrugIntake.id(),createDrugIntake.drug(),createDrugIntake.amountEntity(),createDrugIntake.amount(), createDrugIntake.takeTimestamp(),createDrugIntake.creationTimestamp(),createDrugIntake.modificationTimestamp(),createDrugIntake.migraineId());
-            drugIntakeRepository.save(drugIntake);
-            return "DrugIntake wurde erstellt";
+            DrugIntake drugIntake = new DrugIntake(createDrugIntake.drug(),createDrugIntake.amountEntity(),createDrugIntake.amount(), createDrugIntake.takeTimestamp(),createDrugIntake.creationTimestamp(),createDrugIntake.modificationTimestamp(),createDrugIntake.migraine());
+            return drugIntakeRepository.save(drugIntake);
         }catch (Exception e){
             e.printStackTrace();
             throw new IllegalArgumentException("Ungültige Argumente für die Erstellung von DrugIntake.");
@@ -77,12 +69,7 @@ public class DrugIntakeServiceImpl implements DrugIntakeService {
 
     @Override
     public String deleteDrugIntakeById(UUID id) {
-        try {
             drugIntakeRepository.deleteById(id);
             return "DrugIntake wurde gelöscht";
-        }catch (IllegalArgumentException e){
-            e.printStackTrace();
-            throw new IllegalArgumentException("Ungültige Argumente für die Löschung von DrugIntake.");
-        }
     }
 }

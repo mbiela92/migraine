@@ -22,7 +22,6 @@ public class MigraineServiceImplTest {
     @Autowired
     private MigraineService migraineService;
     private void assertMigraineProperties(MigraineDto expected, MigraineDto actual) {
-        assertEquals(expected.id(), actual.id());
         assertEquals(expected.date(), actual.date());
         assertEquals(expected.description(), actual.description());
         assertEquals(expected.painSeverity(), actual.painSeverity());
@@ -31,15 +30,15 @@ public class MigraineServiceImplTest {
     @BeforeAll
     public static void setUp() {
         uuid = UUID.randomUUID();
-        migraineDto = new MigraineDto(uuid, LocalDate.now(),"test", Migraine.PainSeverity.WEAK, LocalDateTime.now().withNano(0),LocalDateTime.now().withNano(0));
+        migraineDto = new MigraineDto(uuid, LocalDate.now(),"test", Migraine.PainSeverity.WEAK, LocalDateTime.now().withNano(0),LocalDateTime.now().withNano(0),null);
     }
 
     @Test
     @org.junit.jupiter.api.Order(1)
     public void TestCreateAndGetMigraine() {
         //GIVEN
-        migraineService.createMigraineById(uuid, migraineDto);
-
+        Migraine savedMigraine = migraineService.createMigraineById(uuid, migraineDto);
+        uuid = savedMigraine.getId();
         //WHEN
         MigraineDto getMigraineDto = migraineService.getMigraineById(uuid);
 
@@ -53,8 +52,7 @@ public class MigraineServiceImplTest {
     @Order(2)
     public void TestUpdateAndGetMigraine() {
         //GIVEN
-        MigraineDto updatedMigraineDto = new MigraineDto(migraineDto.id(), migraineDto.date(),"updatedMigraine", migraineDto.painSeverity(), migraineDto.creationTimestamp(),migraineDto.modificationTimestamp());
-
+        MigraineDto updatedMigraineDto = new MigraineDto(migraineDto.id(), migraineDto.date(),"updatedMigraine", migraineDto.painSeverity(), migraineDto.creationTimestamp(),migraineDto.modificationTimestamp(),null);
         //WHEN
         migraineService.updateMigraineById(uuid,updatedMigraineDto);
         MigraineDto getMigraineDto = migraineService.getMigraineById(uuid);
@@ -74,7 +72,7 @@ public class MigraineServiceImplTest {
         MigraineDto deletedMigraineDto = migraineService.getMigraineById(migraineDto.id());
 
         //THEN
-        assertTrue(deletedMigraineDto == null);
+        assertNull(deletedMigraineDto);
     }
     @Order(4)
     @Test
@@ -89,17 +87,7 @@ public class MigraineServiceImplTest {
         //THEN
         assertEquals("Ungültige Argumente für die Erstellung von Migräne.", exception.getMessage());
     }
-    @Order(5)
-    @Test
-    public void TestGetMigraineById_InvalidArgumentInDb_ThrownIllegalArgument() {
-        //GIVEN
-        //WHEN
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            migraineService.getMigraineById(UUID.fromString("a054f847-7667-4f56-91e9-95c031555e97"));
-        });
-        //THEN
-        assertEquals("Ungültige Argumente für Aufruf der Migräne.", exception.getMessage());
-    }
+
     @Order(6)
     @Test
     public void TestUpdateMigraineById_InvalidMigraineDto_ThrownIllegalArgument(){

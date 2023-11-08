@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 @Entity(name = "Migraine")
@@ -17,8 +18,9 @@ public class Migraine {
         WEAK, MEDIUM, STRONG
     }
     @Id
-    @Column(name = "id",
-            updatable = false)
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.UUID)
+
     private UUID id;
     @Column(name = "date"    )
     private LocalDate date;
@@ -31,21 +33,22 @@ public class Migraine {
     private LocalDateTime creationTimestamp;
     @Column(name = "modification_timestamp"    )
     private LocalDateTime modificationTimestamp;
-    @OneToMany(mappedBy = "migraine",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "migraine",fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
+
     private List<DrugIntake> drugIntakeList;
 
     public Migraine(){
 
     }
 
-    public Migraine(UUID id, LocalDate date, String description, PainSeverity painSeverity,
+    public Migraine(LocalDate date, String description, PainSeverity painSeverity,
                     LocalDateTime creationTimestamp, LocalDateTime modificationTimestamp) {
-        this.id = id;
         this.date = date;
         this.description = description;
         this.painSeverity = painSeverity;
         this.creationTimestamp = creationTimestamp;
         this.modificationTimestamp = modificationTimestamp;
+        drugIntakeList = new ArrayList<>();
     }
 
 
@@ -98,5 +101,9 @@ public class Migraine {
         this.modificationTimestamp = modificationTimestamp;
     }
 
-
+    public void addDrugIntake(final DrugIntake drugIntake){
+        if(drugIntakeList==null)drugIntakeList=new ArrayList<>();
+        drugIntakeList.add(drugIntake);
+        drugIntake.setMigraine(this);
+    }
 }

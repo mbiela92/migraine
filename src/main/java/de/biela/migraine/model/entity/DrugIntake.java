@@ -19,9 +19,8 @@ public class DrugIntake {
         GRAMS, PIECE
     }
     @Id
-    @Column(name = "id",
-            updatable = false
-    )
+    @GeneratedValue(strategy = GenerationType.UUID)
+
     private UUID id;
     @Column(name = "drug")
     private Drug drug;
@@ -35,14 +34,13 @@ public class DrugIntake {
     private LocalDateTime creationTimestamp;
     @Column(name = "modificationTimestamp")
     private LocalDateTime modificationTimestamp;
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE})//Hier stand vorher Persist
     @JoinColumn(name = "migraineId")
     private Migraine migraine;
 
-    public DrugIntake(UUID id, Drug drug, AmountEntity amountEntity, BigDecimal amount,
+    public DrugIntake(Drug drug, AmountEntity amountEntity, BigDecimal amount,
                       LocalDateTime takeTimestamp, LocalDateTime creationTimestamp,
-                      LocalDateTime modificationTimestamp, Migraine migraine) {
-        this.id = id;
+                      LocalDateTime modificationTimestamp,Migraine migraine) {
         this.drug = drug;
         this.amountEntity = amountEntity;
         this.amount = amount;
@@ -92,7 +90,6 @@ public class DrugIntake {
         this.takeTimestamp = takeTimestamp;
     }
 
-
     public LocalDateTime getCreationTimestamp() {
         return creationTimestamp;
     }
@@ -105,17 +102,13 @@ public class DrugIntake {
         return modificationTimestamp;
     }
 
-    public void setModificationTimestamp(LocalDateTime modificationTimestamp) {
-        this.modificationTimestamp = modificationTimestamp;
-    }
+    public void setModificationTimestamp(LocalDateTime modificationTimestamp) {this.modificationTimestamp = modificationTimestamp;}
 
     public Migraine getMigraine() {
         return migraine;
     }
 
-    public void setMigraine(Migraine migraine) {
-        this.migraine = migraine;
-    }
+    public void setMigraine(Migraine migraine) {        this.migraine = migraine;    }
 
     @Override
     public String toString() {
