@@ -26,7 +26,7 @@ public class MigraineServiceImpl implements MigraineService {
 
     }
     @Override
-    public String updateMigraineById(final UUID id, final MigraineDto updatedMigraine){
+    public MigraineDto updateMigraineById(final UUID id, final MigraineDto updatedMigraine){
         try {
             Optional<Migraine> existingMigraine = migraineRepository.findById(id);
             if (existingMigraine.isPresent()) {
@@ -43,21 +43,21 @@ public class MigraineServiceImpl implements MigraineService {
                     tempMigraine.setPainSeverity(updatedMigraine.painSeverity());
                     tempMigraine.setModificationTimestamp(LocalDateTime.now());
                 }
-                migraineRepository.save(tempMigraine);
-                return "Migräne wurde aktualisiert";
+                Migraine temp = migraineRepository.save(tempMigraine);
+                return new MigraineDto(temp.getId(),temp.getDate(),temp.getDescription(),temp.getPainSeverity(),temp.getCreationTimestamp(),temp.getModificationTimestamp(), temp.getDrugIntakeList());
             }
         } catch (Exception e) {
             e.printStackTrace();
             throw new IllegalArgumentException("Ungültige Argumente für die Migräne update.");
         }
-        return "Update ist fehlgeschlagen";
+        return updatedMigraine;
     }
     @Override
-    public Migraine createMigraineById(UUID id, MigraineDto createMigraine) {
+    public MigraineDto createMigraineById(UUID id, MigraineDto createMigraine) {
         try {
             Migraine migraine = new Migraine(createMigraine.date(),createMigraine.description(),createMigraine.painSeverity(), createMigraine.creationTimestamp(),createMigraine.modificationTimestamp());
-            migraine.setId(createMigraine.id());
-            return migraineRepository.save(migraine);
+            migraine =migraineRepository.save(migraine);
+            return new MigraineDto(migraine.getId(),migraine.getDate(),migraine.getDescription(),migraine.getPainSeverity(),migraine.getCreationTimestamp(),migraine.getModificationTimestamp(), migraine.getDrugIntakeList());
         }catch (IllegalArgumentException e){
             e.printStackTrace();
             throw new IllegalArgumentException("Ungültige Argumente für die Erstellung von Migräne.");

@@ -101,6 +101,10 @@ public class Migraine {
         this.modificationTimestamp = modificationTimestamp;
     }
 
+    public List<DrugIntake> getDrugIntakeList() {
+        return drugIntakeList;
+    }
+
     public void addDrugIntake(final DrugIntake drugIntake){
         if(drugIntakeList==null)drugIntakeList=new ArrayList<>();
         drugIntakeList.add(drugIntake);

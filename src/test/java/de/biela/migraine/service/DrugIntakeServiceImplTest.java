@@ -40,8 +40,8 @@ public class DrugIntakeServiceImplTest {
     @Order(1)
     public void TestCreateAndGetDrugIntake() {
         //GIVEN
-        DrugIntake savedDrugIntake = drugIntakeService.createDrugIntakeById(uuid, drugIntakeDto);
-        uuid=savedDrugIntake.getId();
+        DrugIntakeDto savedDrugIntake = drugIntakeService.createDrugIntakeById(uuid, drugIntakeDto);
+        uuid=savedDrugIntake.id();
         //WHEN
         DrugIntakeDto getDrugIntakeById = drugIntakeService.getDrugIntakeById(uuid);
 
@@ -92,14 +92,16 @@ public class DrugIntakeServiceImplTest {
         assertEquals("Ungültige Argumente für die Erstellung von DrugIntake.", exception.getMessage());
     }
 
-    @Order(6)
+    @Order(5)
     @Test
     public void TestUpdateDrugIntakeById_InvalidUUID_FailureMessage(){
         //GIVEN
         // WHEN
-        String failureMessage = drugIntakeService.updateDrugIntakeById(UUID.fromString("11111111-1111-1111-1111-111111111111"),drugIntakeDto);
+        DrugIntakeDto getDrugIntakeDto = drugIntakeService.updateDrugIntakeById(UUID.fromString("11111111-1111-1111-1111-111111111111"),drugIntakeDto);
         //THEN
-        assertEquals("Update ist fehlgeschlagen", failureMessage);
+        assertAll("migraine",
+                () -> assertDrugIntakeProperties(drugIntakeDto,getDrugIntakeDto)
+        );
     }
 
 

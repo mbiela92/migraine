@@ -37,8 +37,8 @@ public class MigraineServiceImplTest {
     @org.junit.jupiter.api.Order(1)
     public void TestCreateAndGetMigraine() {
         //GIVEN
-        Migraine savedMigraine = migraineService.createMigraineById(uuid, migraineDto);
-        uuid = savedMigraine.getId();
+        MigraineDto savedMigraine = migraineService.createMigraineById(uuid, migraineDto);
+        uuid = savedMigraine.id();
         //WHEN
         MigraineDto getMigraineDto = migraineService.getMigraineById(uuid);
 
@@ -79,7 +79,7 @@ public class MigraineServiceImplTest {
     public void TestCreateMigraineById_InvalidMockArgument_ThrownIllegalArgument() {
         //GIVEN
         MigraineDto mockMigraine = Mockito.mock(MigraineDto.class);
-        when(mockMigraine.id()).thenThrow(new IllegalArgumentException());
+        when(mockMigraine.date()).thenThrow(new IllegalArgumentException());
         //WHEN
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             migraineService.createMigraineById(UUID.randomUUID(), mockMigraine);
@@ -106,9 +106,11 @@ public class MigraineServiceImplTest {
     public void TestUpdateMigraineById_InvalidUUID_FailureMessage(){
         //GIVEN
         // WHEN
-        String failureMessage = migraineService.updateMigraineById(UUID.fromString("11111111-1111-1111-1111-111111111111"),migraineDto);
+        MigraineDto getMigraineDto = migraineService.updateMigraineById(UUID.fromString("11111111-1111-1111-1111-111111111111"),migraineDto);
         //THEN
-        assertEquals("Update ist fehlgeschlagen", failureMessage);
+        assertAll("migraine",
+                () -> assertMigraineProperties(migraineDto,getMigraineDto)
+        );
     }
 
 }

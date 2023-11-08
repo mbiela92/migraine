@@ -25,7 +25,7 @@ public class DrugIntakeServiceImpl implements DrugIntakeService {
 
     }
     @Override
-    public String updateDrugIntakeById(UUID id, DrugIntakeDto updatedDrugIntake) {
+    public DrugIntakeDto updateDrugIntakeById(UUID id, DrugIntakeDto updatedDrugIntake) {
 
             Optional<DrugIntake> existingDrugIntake = drugIntakeRepository.findById(id);
             if (existingDrugIntake.isPresent()) {
@@ -50,16 +50,17 @@ public class DrugIntakeServiceImpl implements DrugIntakeService {
                     tempDrugIntake.setMigraine(updatedDrugIntake.migraine());
                     tempDrugIntake.setModificationTimestamp(LocalDateTime.now());
                 }
-                drugIntakeRepository.save(tempDrugIntake);
-                return "DrugIntake wurde aktualisiert";
+                DrugIntake temp = drugIntakeRepository.save(tempDrugIntake);
+                return new DrugIntakeDto(temp.getId(),temp.getDrug(),temp.getAmountEntity(),temp.getAmount(),temp.getTakeTimestamp(),temp.getCreationTimestamp(),temp.getModificationTimestamp(),temp.getMigraine());
             }
-        return "Update ist fehlgeschlagen";
+        return updatedDrugIntake;
     }
     @Override
-    public DrugIntake createDrugIntakeById(UUID id, DrugIntakeDto createDrugIntake) {
+    public DrugIntakeDto createDrugIntakeById(UUID id, DrugIntakeDto createDrugIntake) {
         try {
             DrugIntake drugIntake = new DrugIntake(createDrugIntake.drug(),createDrugIntake.amountEntity(),createDrugIntake.amount(), createDrugIntake.takeTimestamp(),createDrugIntake.creationTimestamp(),createDrugIntake.modificationTimestamp(),createDrugIntake.migraine());
-            return drugIntakeRepository.save(drugIntake);
+            drugIntake =  drugIntakeRepository.save(drugIntake);
+            return new DrugIntakeDto(drugIntake.getId(),drugIntake.getDrug(),drugIntake.getAmountEntity(),drugIntake.getAmount(),drugIntake.getTakeTimestamp(),drugIntake.getCreationTimestamp(),drugIntake.getModificationTimestamp(),drugIntake.getMigraine());
         }catch (Exception e){
             e.printStackTrace();
             throw new IllegalArgumentException("Ungültige Argumente für die Erstellung von DrugIntake.");
