@@ -20,17 +20,17 @@ public class DrugIntakeController {
         return ResponseEntity.ok(drugIntakeService.getDrugIntakeById(UUID.fromString(id)));
     }
     @PatchMapping(value = "/{id}")
-    public DrugIntakeDto updateDrugIntakeById(@PathVariable(value = "id") final String id, @RequestBody DrugIntakeDto updatedDrugIntake) {
-        return drugIntakeService.updateDrugIntakeById(UUID.fromString(id), updatedDrugIntake);
+    public ResponseEntity<DrugIntakeDto> updateDrugIntakeById(@PathVariable(value = "id") final String id, @RequestBody DrugIntakeDto updatedDrugIntake) {
+        return ResponseEntity.ok(drugIntakeService.updateDrugIntakeById(UUID.fromString(id), updatedDrugIntake));
     }
 
     @PutMapping(value = "/{id}")
-    public DrugIntakeDto createDrugIntakeById(@PathVariable(value = "id") final String id, @RequestBody DrugIntakeDto createDrugIntake) {
-        return drugIntakeService.createDrugIntakeById(UUID.fromString(id), createDrugIntake);
+    public ResponseEntity<DrugIntakeDto> createDrugIntakeById(@PathVariable(value = "id") final String id, @RequestBody DrugIntakeDto createDrugIntake) {
+        return ResponseEntity.ok(drugIntakeService.createDrugIntakeById(UUID.fromString(id), createDrugIntake));
     }
 
     @DeleteMapping(value = "/{id}")
-    public String deleteDrugIntakeById(@PathVariable(value = "id") final String id) {
-        return drugIntakeService.deleteDrugIntakeById(UUID.fromString(id));
+    public ResponseEntity<String> deleteDrugIntakeById(@PathVariable(value = "id") final String id) {
+        return ResponseEntity.ok(drugIntakeService.deleteDrugIntakeById(UUID.fromString(id)));
     }
 }

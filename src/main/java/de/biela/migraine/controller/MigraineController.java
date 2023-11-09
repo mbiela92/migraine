@@ -22,18 +22,18 @@ public class MigraineController {
     }
 
     @PatchMapping(value = "/{id}")
-    public MigraineDto updateMigraineById(@PathVariable(value = "id") final String id, @RequestBody MigraineDto updatedMigraine) {
-        return migraineService.updateMigraineById(UUID.fromString(id), updatedMigraine);
+    public ResponseEntity<MigraineDto> updateMigraineById(@PathVariable(value = "id") final String id, @RequestBody MigraineDto updatedMigraine) {
+        return ResponseEntity.ok(migraineService.updateMigraineById(UUID.fromString(id), updatedMigraine));
     }
 
     @PutMapping(value = "/{id}")
-    public MigraineDto createMigraineById(@PathVariable(value = "id") final String id, @RequestBody MigraineDto createMigraine) {
-        return migraineService.createMigraineById(UUID.fromString(id), createMigraine);
+    public ResponseEntity<MigraineDto> createMigraineById(@PathVariable(value = "id") final String id, @RequestBody MigraineDto createMigraine) {
+        return ResponseEntity.ok(migraineService.createMigraineById(UUID.fromString(id), createMigraine));
     }
 
     @DeleteMapping(value = "/{id}")
-    public String deleteMigraineById(@PathVariable(value = "id") final String id) {
-        return migraineService.deleteMigraineById(UUID.fromString(id));
+    public ResponseEntity<String> deleteMigraineById(@PathVariable(value = "id") final String id) {
+        return ResponseEntity.ok(migraineService.deleteMigraineById(UUID.fromString(id)));
     }
 
 
