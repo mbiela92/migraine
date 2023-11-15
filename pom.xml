@@ -10,11 +10,11 @@
 	</parent>
 	<groupId>de.biela</groupId>
 	<artifactId>migraine</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>migraine</name>
 	<description>project for migrainetracker</description>
 	<properties>
-		<java.version>20</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -40,6 +40,7 @@
 		<dependency>
 			<groupId>org.mariadb.jdbc</groupId>
 			<artifactId>mariadb-java-client</artifactId>
+			<version>3.1.4</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
@@ -47,11 +48,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
+		<!--<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.28</version>
-		</dependency>
+		</dependency>-->
 	</dependencies>
 	<build>
 		<plugins>

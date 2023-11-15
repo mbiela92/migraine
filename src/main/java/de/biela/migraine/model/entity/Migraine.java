@@ -18,7 +18,6 @@ public class Migraine {
         WEAK, MEDIUM, STRONG
     }
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.UUID)
 
     private UUID id;
